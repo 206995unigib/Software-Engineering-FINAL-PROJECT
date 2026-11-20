@@ -1,23 +1,15 @@
 # gui.py - everything the user sees (Tkinter). Each button calls an on_... function here,
 # which reads the fields, calls validation.py and database.py, and shows a messagebox.
 
-# ---- PROGRESS (delete before submitting) ----
-# 12 FUNCTIONS IN TOTAL (Update removed to keep it simple):
+# ----  ----
+#
 #   database.py   -> get_connection, create_table, add_vehicle, get_vehicle, delete_vehicle, plate_exists (DONE)
 #   validation.py -> validate_vehicle
 #   gui.py        -> on_add (+ on_save inside), on_list, on_delete (+ on_confirm_delete inside)
 # DONE:
 #   gui.py      -> window 1200x700, title, 3 buttons (Add/List/Delete), 2 images,
 #                  on_add opens an empty tk.Toplevel window
-# NEXT:
-#   0. on_list: when opened it shows ALL vehicles. TODO: when the user filters, show ONLY
-#      the matching ones (old labels stay on screen now). Find the SIMPLEST way
-#      (user rejected winfo_children/destroy).
-#      Option seen: labels = [] list, append each Label, destroy them at start of on_filter.
-#      Also: KMs label shows i[4] (price) -> km is i[5].
-#   1. gui.py -> on_add form (6 Entry + Save -> on_save -> add_vehicle)
-#   2. gui.py -> on_list (table with get_vehicle), on_delete (plate Entry + Delete button)
-#                + at the top: from database import ... and create_table()
+# 
 #   3. validation.py -> validate_vehicle
 #   4. tests/ -> PyTest for database.py and validation.py
 #   5. GitHub repo, report, presentation
