@@ -8,18 +8,19 @@
 
 import sqlite3
 
+# Reversibility: all the SQL is in this file, so changing the database only touches here.
 DB_NAME = "app.db"
 
 # creating a function that returns the connection with the database.
 # as i am using the connection in multiple functions, the DRY principle is applied. 
 def get_connection(): 
     return sqlite3.connect(DB_NAME)
-# crea la base de datos la primera vez que la ejectuan'
-# osea, en create_table. luego, cada vez que la ejecutan
-# en otras funciones, abre esa conexion
-# la primera vez la crea, luego la abre.
-# conn = getconecction hace que conn pueda acceder a 
-# a la base de datos mediante funciones
+# it creates the database the first time it runs,
+# that is, in create_table. then, every time it runs
+# in other functions, it opens that connection.
+# the first time it creates it, then it opens it.
+# conn = get_connection lets conn access
+# the database through functions
 # conn.execute, conn.close, conn.commit......
 
 def create_table():
@@ -48,12 +49,12 @@ def add_vehicle(plate, brand, model, year, price, km):
 
 
 
-def get_vehicle(search=""): # valor por defecto.
+def get_vehicle(search=""): # default value.
 
-    #fetchall() trae los resultados de la consulta y los guarda como lista (en raws. )
+    #fetchall() brings the results of the query and stores them as a list (of rows.)
 
-    conn = get_connection() # estableciendo conexion a la base de datos. 
-    if search == "": # si ese valor se cumple, es decir, el usuario no ingresa brand para filtrar
+    conn = get_connection() # opening the connection to the database.
+    if search == "": # if this is true, the user didn't type a brand to filter
         rows = conn.execute("SELECT * FROM vehicles").fetchall()
 
     else: 
@@ -62,8 +63,7 @@ def get_vehicle(search=""): # valor por defecto.
     conn.close()
     return rows
 
-res = get_vehicle("Nissan")
-print(res)
+
 
 
 

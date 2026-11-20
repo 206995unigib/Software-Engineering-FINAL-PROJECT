@@ -1,19 +1,6 @@
 # gui.py - everything the user sees (Tkinter). Each button calls an on_... function here,
 # which reads the fields, calls validation.py and database.py, and shows a messagebox.
-
-# ----  ----
-#
-#   database.py   -> get_connection, create_table, add_vehicle, get_vehicle, delete_vehicle, plate_exists (DONE)
-#   validation.py -> validate_vehicle
-#   gui.py        -> on_add (+ on_save inside), on_list, on_delete (+ on_confirm_delete inside)
-# DONE:
-#   gui.py      -> window 1200x700, title, 3 buttons (Add/List/Delete), 2 images,
-#                  on_add opens an empty tk.Toplevel window
-# 
-#   3. validation.py -> validate_vehicle
-#   4. tests/ -> PyTest for database.py and validation.py
-#   5. GitHub repo, report, presentation
-# ----------------------------------------------
+# Orthogonality: this file only does the screen, no SQL or checks here.
 
 import tkinter as tk
 from tkinter import messagebox
@@ -38,13 +25,13 @@ tk.Label(root, text="Car Dealership", font=("Arial", 32, "bold"), width=100, bac
 
 
 def on_add():
-    win = tk.Toplevel(root) # crea una nueva ventana, cuyo padre es root. 
+    win = tk.Toplevel(root) # creates a new window, its parent is root.
     win.title("Add Vehicle")
 
     win.geometry("600x300")
 
     #creating FROM
-    tk.Label(win, text="PLATE").grid(row=0, column =0) #creas una caja de texto, le pones plate
+    tk.Label(win, text="PLATE").grid(row=0, column =0) #you create a text label and write plate on it
     plate = tk.Entry(win)
     plate.grid(row=0, column=1, padx=15)
 
@@ -53,15 +40,15 @@ def on_add():
     brand.grid(row=1, column=1, padx=15, pady=15)
 
     tk.Label(win, text="MODEL").grid(row=2, column=0)
-    model = tk.Entry(win) #creas model, que es un entry dentro de win... input dentro de la nueva ventana
+    model = tk.Entry(win) #you create model, which is an entry inside win... an input inside the new window
     model.grid(row=2, column=1, padx=15,)
 
     tk.Label(win, text="YEAR").grid(row=3, column=0)
-    year = tk.Entry(win) # creando un nuevo entry (input). primero lo creas, luego lo mostras
+    year = tk.Entry(win) # creating a new entry (input). first you create it, then you show it
     year.grid(row=3, column=1, padx=15, pady=15)
 
     tk.Label(win, text="PRICE").grid(row=4, column=0)
-    price = tk.Entry(win) # creo el input, lo almaceno en price. 
+    price = tk.Entry(win) # I create the input and store it in price.
     price.grid(row=4, column=1, padx=15)
 
     tk.Label(win, text="KMs").grid(row=5, column=0)
@@ -101,14 +88,14 @@ def on_list():
 
 
     def on_filter():
-       rows = get_vehicle(filtervehicle.get()) # lo que te devuelve esta funcion es una lista de tuplas. 
+       rows = get_vehicle(filtervehicle.get()) # what this function returns is a list of tuples.
        if len(rows) == 0:
             messagebox.showerror("ERROR", "NO RESULTS FOUND")
 
        else:
         row = 1
         count = 5
-        for i in rows: #rows es la lista de tuplas... [(1, 1, 1, 1, 1, )]
+        for i in rows: #rows is the list of tuples... [(1, 1, 1, 1, 1, )]
             tk.Label(listwin, text=row).grid(row=count, column=0)
             tk.Label(listwin, text="Plate", width=5, background="#2b2d42", fg="white").grid(row=count, column=1, padx=5)
             tk.Label(listwin, text=i[0]).grid(row=count, column=2)
@@ -121,7 +108,7 @@ def on_list():
             tk.Label(listwin, text="Price", width=5, background="#2b2d42", fg="white").grid(row=count, column=9, padx=5)
             tk.Label(listwin, text=i[4]).grid(row=count, column=10)
             tk.Label(listwin, text="KMs", width=5, background="#2b2d42", fg="white").grid(row=count, column=11, padx=5)
-            tk.Label(listwin, text=i[4]).grid(row=count, column=12)
+            tk.Label(listwin, text=i[5]).grid(row=count, column=12)
 
             count = count + 1
             row =row+1
