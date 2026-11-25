@@ -3,7 +3,7 @@
 #   get_connection()      -> opens app.db
 #   create_table()        -> CREATE TABLE IF NOT EXISTS
 #   add_vehicle(...)      -> INSERT
-#   get_vehicles()        -> SELECT *
+#   get_vehicle(search)   -> SELECT (all, or by brand/plate)
 #   delete_vehicle(plate) -> DELETE
 
 import sqlite3

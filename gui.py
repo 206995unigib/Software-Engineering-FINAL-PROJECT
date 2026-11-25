@@ -83,6 +83,9 @@ def on_list():
     filtervehicle.grid(columnspan=11)
 
     def on_filter():
+        for w in results.winfo_children():  # deletes the old rows before showing new ones
+            w.destroy()
+
         rows = get_vehicle(filtervehicle.get())  # what this function returns is a list of tuples.
         if len(rows) == 0:
             messagebox.showerror("ERROR", "NO RESULTS FOUND")
@@ -91,24 +94,27 @@ def on_list():
             row = 1
             count = 5
             for i in rows:  # rows is the list of tuples... [(1, 1, 1, 1, 1, )]
-                tk.Label(listwin, text=row).grid(row=count, column=0)
-                tk.Label(listwin, text="Plate", width=5, background="#2b2d42", fg="white").grid(row=count, column=1, padx=5)
-                tk.Label(listwin, text=i[0]).grid(row=count, column=2)
-                tk.Label(listwin, text="Brand", width=5, background="#2b2d42", fg="white").grid(row=count, column=3, padx=5)
-                tk.Label(listwin, text=i[1]).grid(row=count, column=4)
-                tk.Label(listwin, text="Model", width=5, background="#2b2d42", fg="white").grid(row=count, column=5, padx=5)
-                tk.Label(listwin, text=i[2]).grid(row=count, column=6)
-                tk.Label(listwin, text="Year", width=5, background="#2b2d42", fg="white").grid(row=count, column=7, padx=5)
-                tk.Label(listwin, text=i[3]).grid(row=count, column=8)
-                tk.Label(listwin, text="Price", width=5, background="#2b2d42", fg="white").grid(row=count, column=9, padx=5)
-                tk.Label(listwin, text=i[4]).grid(row=count, column=10)
-                tk.Label(listwin, text="KMs", width=5, background="#2b2d42", fg="white").grid(row=count, column=11, padx=5)
-                tk.Label(listwin, text=i[5]).grid(row=count, column=12)
+                tk.Label(results, text=row).grid(row=count, column=0)
+                tk.Label(results, text="Plate", width=5, background="#2b2d42", fg="white").grid(row=count, column=1, padx=5)
+                tk.Label(results, text=i[0]).grid(row=count, column=2)
+                tk.Label(results, text="Brand", width=5, background="#2b2d42", fg="white").grid(row=count, column=3, padx=5)
+                tk.Label(results, text=i[1]).grid(row=count, column=4)
+                tk.Label(results, text="Model", width=5, background="#2b2d42", fg="white").grid(row=count, column=5, padx=5)
+                tk.Label(results, text=i[2]).grid(row=count, column=6)
+                tk.Label(results, text="Year", width=5, background="#2b2d42", fg="white").grid(row=count, column=7, padx=5)
+                tk.Label(results, text=i[3]).grid(row=count, column=8)
+                tk.Label(results, text="Price", width=5, background="#2b2d42", fg="white").grid(row=count, column=9, padx=5)
+                tk.Label(results, text=i[4]).grid(row=count, column=10)
+                tk.Label(results, text="KMs", width=5, background="#2b2d42", fg="white").grid(row=count, column=11, padx=5)
+                tk.Label(results, text=i[5]).grid(row=count, column=12)
 
                 count = count + 1
                 row = row + 1
 
     tk.Button(listwin, text="FILTER", width=15, command=on_filter, background="#c1121f", fg="white").grid(padx=15, pady=15, columnspan=11)
+
+    results = tk.Frame(listwin)  # box for the results, emptied on every filter
+    results.grid(columnspan=13)
 
     on_filter()  # calling the function at the beginning, so the filtervehicle entry is empty,
     # therefore, search=""... returns ALL rows from the table.
@@ -135,20 +141,16 @@ def on_delete():
 
     tk.Button(delwin, text="SUBMIT", command=on_submit, background="#c1121f", fg="white", width=15).grid(pady=15)
 
-
 nav = tk.Frame(root, background="#1c1c1e")
 # invisible box (like a <div>) inside the window, to group the buttons
 nav.pack()            # shows the box below the title
 # Each button: parent = nav (goes inside the box), width=25 = same width for all,
 # side="left" = next to the previous one (not below), padx=5 = 5px gap on each side
 
-
 # refactoring: before, three buttons separetly
-# then, defining same funcion and using it for each button.
-
+# then, defining same function and using it for each button.
 def select_buttons(option, function):
     tk.Button(nav, text=option, command=function, width=33, height=3, font=("Arial", 11), background="#c1121f", fg="white", cursor="hand2").pack(side="left", padx=5)
-
 
 select_buttons("Add Vehicle", on_add)
 select_buttons("Filter Vehicles", on_list)
